@@ -25,7 +25,7 @@
                                     <p>{{ article.content | strip_html | truncatewords: 15 }}</p>
                                 {% endif %}
 
-                                <a href="{{ article.url }}" class="font-medium text-blue-600 hover: text-blue-800 my-4 block">{{ section.settings.blog_read_more }}</a>
+                                <a href="{{ article.url }}" class="font-medium text-blue-600 hover:text-blue-800 my-4 block">{{ section.settings.blog_read_more }}</a>
                             </div>
 
                             
@@ -36,7 +36,9 @@
             </div>
         </div>
 
-        
+        <div class="max-w-6xl mx-auto">
+            {% render 'pagination', pagination: paginate %}
+        </div>
     {% endpaginate %}
 </div>
 
