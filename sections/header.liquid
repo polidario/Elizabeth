@@ -57,13 +57,13 @@
             </nav>
             <!-- CART BUTTON / ACCOUNT LINKS IF ENABLED -->
             <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
-                <a href="/cart" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
+                <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
                     {% render 'icon-shopping-bag' %}
                 </a>
 
                 {% if shop.customer_accounts_enabled %}
                     {% if customer %}
-                        <a href="/account" class="text-base text-gray-500 hover:text-gray-900">account</a>
+                        <a href="{{ routes.account_url }}" class="text-base text-gray-500 hover:text-gray-900">account</a>
                         {{ 'Log out'  | customer_logout_link | replace: '<a', '<a class="text-base text-gray-500 hover:text-gray-900"' }}
                     {% else %}
                         {{ 'Log in ' | customer_login_link | replace: '<a', '<a class="text-base text-gray-500 hover:text-gray-900"' }}
