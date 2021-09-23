@@ -1,12 +1,11 @@
 <div class="px-4 py-8">
-    {% paginate collection.products by 6 %}
+    {% paginate collection.products by section.settings.number_of_products_per_page %}
         <h1 class="text-3xl text-center">{{ collection.title }}</h1>
 
         <div class="max-w-6xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {% for product in collection.products %}
                     {% render 'product-card', product_product: product %}
-                    
                 {% else %}
                     <p>There are no products inside of this collection</p>
                 {% endfor %}
@@ -18,3 +17,16 @@
     {% endpaginate %}
 </div>
 
+{% schema %}
+{
+    "name": "Template Collection",
+    "settings": [
+        {
+            "type": "number",
+            "id": "number_of_products_per_page",
+            "default": 6,
+            "label": "Number of products per page"
+        }
+    ]
+}
+{% endschema %}
