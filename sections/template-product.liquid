@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
+{% assign selected_variant = product.selected_or_first_available_variant %}
+
 <style>
     .swiper-button-prev, .swiper-button-next { color: black; top: auto !important; height: 20px; }
     .swiper-button-prev::after, .swiper-button-next::after { font-size: 20px; }
@@ -42,7 +44,7 @@
 
         <div class="product--information sticky top-5 p-2">
             {% form 'product', product %}
-                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="id" value="{{ selected_variant.id }}">
                 <div class="my-3">
                     <span class="text-xs text-gray-500">{{ product.vendor }}</span>
                 </div>
@@ -52,11 +54,10 @@
                 </div>
 
                 <div class="my-3">
-                    {% assign product_price = product.selected_or_first_available_variant %}
-                    <span class="text-base text-gray-500 line-through">{{ product_price.compare_at_price | money }}</span>
-                    <span class="text-lg text-gray-900">{{ product_price.price | money }}</span>
+                    <span class="text-base text-gray-500 line-through">{{ selected_variant.compare_at_price | money }}</span>
+                    <span class="text-lg text-gray-900">{{ selected_variant.price | money }}</span>
 
-                    {% if product_price.price < product_price.compare_at_price %}
+                    {% if selected_variant.price < selected_variant.compare_at_price %}
                         <span class="px-5 py-1 text-sm font-bold bg-red-500 rounded-full text-white mx-4">Sale</span>
                     {% endif %}
                 </div>
@@ -104,11 +105,11 @@
 
                 <div class="my-3">
                     <button type="submit" name="add" class="w-full px-6 py-4 bg-gray-900 text-white hover:bg-gray-700 rounded-sm my-2"
-                        {% if product.selected_or_first_available_variant == false %}
+                        {% if selected_variant.available == false %}
                             disabled
                         {% endif %}
                     >
-                        {% if product.selected_or_first_available_variant.available == false %}
+                        {% if selected_variant.available == false %}
                             Sold out
                         {% else %}
                             Add to cart
