@@ -1,0 +1,136 @@
+<div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="flex items-start md:items-end justify-between my-5">
+        <div class="w-1/2">
+            <h1 class="text-2xl font-bold text-gray-700">Order {{ order.name }}</h1>
+            <p class="text-gray-500 my-2">Placed on {{ order.created_at | date: format: 'date' }}</p>
+            <span class="text-sm text-white bg-gray-700 rounded-full my-2 px-4 py-1">{{ order.financial_status_label }}</span>
+        </div>
+        
+        <a href="{{ routes.account_url }}" class="text-blue-700 hover:text-blue-900 underline font-medium">Back to account</a>
+    </div>
+
+    <div>
+        {% for line_item in order.line_items %}
+            <div class="w-full border border-gray-200 divide-y rounded-sm mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-12 p-4 md:p-12">
+                    <div class="w-full h-80 min-h-80 bg-gray-200 rounded-md overflow-hidden border">
+                        {% if line_item.image %}
+                            <img class="w-full h-full object-center object-cover" src="{{ line_item.image | img_url: 'medium' }}" alt="{{ line_item.image.alt }}">
+                        {% else %}
+                            {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-center object-cover' }}    
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <h1 class="text-xl font-medium mb-4">{{ line_item.title | link_to: line_item.product.url }}</h1>
+
+                        <table class="table-auto w-full mb-4">
+                            <tbody>
+                                <tr>
+                                    <td class="border border-gray-200 px-4 py-2">Price</td>
+                                    <td class="border border-gray-200 px-4 py-2">{{ line_item.original_price | money }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-200 px-4 py-2">Quantity</td>
+                                    <td class="border border-gray-200 px-4 py-2">{{ line_item.quantity }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-200 px-4 py-2">Final price</td>
+                                    <td class="border border-gray-200 px-4 py-2">{{ line_item.final_line_price | money }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="text-gray-500 mb-4">
+                            {{ line_item.product.description | truncatewords: 15 }}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 class="font-medium mb-4">Delivery address</h1>
+
+                        <div class="text-gray-500 mb-4">
+                            <div>
+                                <p>Address 1: {{ order.shipping_address.address1 }}</p>
+                                <p>Address 2: {{ order.shipping_address.address2 }}</p>
+                                <p>Street: {{ order.shipping_address.street }}</p>
+                                <p>Province: {{ order.shipping_address.province }}</p>
+                                <p>City: {{ order.shipping_address.city }}</p>
+                                <p>ZIP: {{ order.shipping_address.zip }}</p>
+                                <p>Country: {{ order.shipping_address.country }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 md:p-12">
+                    <h1 class="text-lg font-medium mb-4">Fulfillment</h1>
+
+                    {% if line_item.successfully_fulfilled_quantity > 0 %}
+                        <p class="mb-2">We have fulfilled {{ line_item.successfully_fulfilled_quantity }} items of your recent order.</p>
+                        <p class="mb-2">Tracking company: {{ line_item.fulfillment.tracking_company }}</p>
+                        <p class="mb-2">Tracking number: {{ line_item.fulfillment.tracking_number }}</p>
+
+                        <a target="_blank" href="{{ line_item.fulfillment.tracking_url }}" class="flex w-max text-sm text-white font-medium bg-gray-700 hover:bg-gray-900 px-4 py-1 rounded">
+                            Track order <span class="ml-1">{% render 'icon-link' %}</span>
+                        </a>
+                    {% else %}
+                        <p class="text-gray-500">This item is not yet fulfilled</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-12 border border-gray-200 rounded-sm p-4 md:p-12 my-6 bg-gray-50">
+        <div>
+            <h1 class="font-medium mb-4">Billing address</h1>
+
+            {{ order.billing_address | format_address }}
+        </div>
+        <div>
+            <h1 class="font-medium mb-4">Payment information</h1>
+
+            {% for transaction in order.transactions %}
+                <div class="mb-4">
+                    {% assign credit_card_company = transaction.payment_details.credit_card_company %}
+                    {% assign credit_card_last_four_digits = transaction.payment_details.credit_card_number %}
+
+                    {% if credit_card_company %}
+                        <p>{{ credit_card_company }}</p>
+                        <p>{{ credit_card_last_four_digits }}</p>
+
+                        {% case transaction.status_label %}
+                            {% when 'Failure' %}
+                                {% assign background = 'red' %}
+                            {% else %}
+                                {% assign background = 'green' %}
+                        {% endcase %}
+
+                        <span class="bg-{{ background }}-700 rounded-full text-sm px-4 py-1 text-white">{{ transaction.status_label }}</span>
+                    {% else %}
+                        <p class="text-sm mb-4">This order is manually placed {{ shop.name }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <table class="table-auto w-full mb-4">
+                <tbody>
+                    <tr>
+                        <td class="border border-gray-200 px-4 py-2">Subtotal</td>
+                        <td class="border border-gray-200 px-4 py-2">{{ order.subtotal_price | money }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-200 px-4 py-2">Shipping</td>
+                        <td class="border border-gray-200 px-4 py-2">{{ order.shipping_price | money }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-200 px-4 py-2">Total</td>
+                        <td class="border border-gray-200 px-4 py-2">{{ order.total_price | money }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
