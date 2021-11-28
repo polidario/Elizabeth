@@ -1,0 +1,33 @@
+<div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="flex flex-col md:flex-row items-center justify-between my-5 gap-4">
+        <h1 class="text-2xl font-bold text-gray-700">Addresses</h1>
+        <button type="button" class="text-white font-medium bg-gray-700 hover:bg-gray-900 px-6 py-2">Create new address</button>
+        <a href="{{ routes.account_url }}" class="text-blue-600 hover:text-blue-800 font-medium underline">Back to account</a>
+    </div>
+
+    <div>
+        {% paginate customer.addresses by 10 %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-12 p-4 md:p-12">
+                {% for address in customer.addresses %}
+                    <div>
+                        <div class="relative flex flex-col text-center border p-2">
+                            {% if address == customer.default_address %}
+                                <span class="text-xs font-medium text-white bg-green-700 px-4 py-2">Default</span>
+                            {% endif %}
+
+                            <div class="my-8 h-full">
+                                {{ address | format_address }}
+                            </div>
+
+                            <div class="flex flex-row gap-2">
+                                <button class="w-full text-xs text-white bg-gray-700 hover:bg-gray-900 font-medium py-2">Edit</button>
+                                <button class="w-full text-xs font-medium text-gray-700 border py-2">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+        {% endpaginate %}
+    </div>
+</div>
