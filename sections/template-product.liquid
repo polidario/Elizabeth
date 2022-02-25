@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js" defer></script>
 
 {% assign selected_variant = product.selected_or_first_available_variant %}
 
@@ -68,7 +68,7 @@
                         {% when 'variant_selector' %}
                             <div class="my-3">
                                 {% unless product.has_only_default_variant %}
-                                    <variant-selector data-url="{{ product.url}}" data-section="{{ section.id }}">
+                                    <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
                                         {% for option in product.options_with_values %}
                                             <label for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
 
