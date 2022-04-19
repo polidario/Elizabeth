@@ -785,7 +785,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 100%;
 }
 
-.h-94 {
+.h-\[22rem\] {
   height: 22rem;
 }
 
@@ -795,10 +795,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-5 {
   height: 1.25rem;
-}
-
-.h-\[22rem\] {
-  height: 22rem;
 }
 
 .min-h-full {
@@ -1272,10 +1268,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pr-10 {
   padding-right: 2.5rem;
-}
-
-.pt-\[20px\] {
-  padding-top: 20px;
 }
 
 .text-left {
