@@ -1,15 +1,16 @@
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    './layout/*.liquid',
+    './sections/*.liquid',
+    './snippets/*.liquid',
+    './templates/*.liquid'
+  ],
   theme: {
     extend: {
       height: {
         '94': '22rem'
       }
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
 }
