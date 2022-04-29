@@ -797,6 +797,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 1.25rem;
 }
 
+.h-\[100vw\] {
+  height: 100vw;
+}
+
 .min-h-full {
   min-height: 100%;
 }

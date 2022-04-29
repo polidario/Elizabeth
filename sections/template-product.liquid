@@ -23,11 +23,11 @@
             </div>
 
             <div class="md:hidden">
-                <div class="swiper h-[22rem]">
+                <div class="swiper">
                     <div class="swiper-wrapper">
                         {% for media in product.media %}
                             <div class="swiper-slide">
-                                <div class="h-80 overflow-hidden p-2">
+                                <div class="h-[100vw] overflow-hidden p-2">
                                     {% render 'product-media', media: media %}
                                 </div>
                             </div>
@@ -209,18 +209,23 @@
 </script>
 
 <script>
-    const swiper = new Swiper('.swiper', {
-        direction: 'horizontal',
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            const swiper = new Swiper('.swiper', {
+                    direction: 'horizontal',
 
-        pagination: {
-            el: '.swiper-pagination'
-        },
+                    pagination: {
+                        el: '.swiper-pagination'
+                    },
 
-        navigation: {
-            prevEl: '.swiper-button-prev',
-            nextEl: '.swiper-button-next'
-        }
+                    navigation: {
+                        prevEl: '.swiper-button-prev',
+                        nextEl: '.swiper-button-next'
+                }
+            })
+        } catch(e) { console.log("SwiperJS is not defined"); }
     })
+    
 </script>
 
 {% schema %}
