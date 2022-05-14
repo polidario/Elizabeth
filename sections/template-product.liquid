@@ -136,6 +136,24 @@
     </div>
 </div>
 
+<div id="productModelModal">
+    <div class="w-full h-full z-50 items-center fixed inset-0">
+        <div class="relative w-full h-full bg-white">
+            <div class="relative">
+                <div class="flex justify-between items-start p-5 border-b">
+                    <h2 class="text-xl font-bold text-gray-700">3D Model Preview</h2>
+                    <button class="text-gray-400 bg-transparent hover:text-gray-700 rounded text-sm p-2 ml-auto inline-flex items-center">
+                        {% render 'icon-close' %}
+                    </button>
+                </div>
+
+                <div id="body" class="block relative">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     class VariantSelector extends HTMLElement {
         constructor() {
