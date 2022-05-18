@@ -11,7 +11,7 @@
     {% when 'model' %}
         <product-model>
             <div>
-                <button class="w-full h-full bg-gray-100 border relative">
+                <button x-on:click="productModalOpen = true" class="w-full h-full bg-gray-100 border relative">
                     <span class="border bg-gray-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                         {% render 'icon-model-viewer' %}
                     </span>
