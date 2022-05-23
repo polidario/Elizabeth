@@ -3,6 +3,8 @@
 
 {% assign selected_variant = product.selected_or_first_available_variant %}
 
+<script src="{{ 'product-model.js' | asset_url }}" defer></script>
+
 <style>
     .swiper-button-prev, .swiper-button-next { color: black; top: auto !important; height: 20px; }
     .swiper-button-prev::after, .swiper-button-next::after { font-size: 20px; }
