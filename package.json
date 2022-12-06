@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bbbpppolly/Elizabeth.git"
+    "url": "git+https://github.com/polidario/Elizabeth.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bbbpppolly/Elizabeth/issues"
+    "url": "https://github.com/polidario/Elizabeth/issues"
   },
-  "homepage": "https://github.com/bbbpppolly/Elizabeth#readme",
+  "homepage": "https://github.com/polidario/Elizabeth#readme",
   "devDependencies": {
     "autoprefixer": "^10.4.4",
     "postcss": "^8.4.12",
